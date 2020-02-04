@@ -3,5 +3,13 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+hotel = Hotel.where(external_id: 'dummy-hotel-1', phone: '+1 (123) 123-1234').first_or_create!(name: 'Test Hotel')
+
+2.times do |i|
+  User.where(email: "user#{i + 1}+hotel@example.org").first_or_create!(
+    password:              'pass1234',
+    password_confirmation: 'pass1234',
+    profile:               { name: "User##{i + 1}" },
+    hotel: hotel
+  )
+end
